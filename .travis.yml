@@ -24,3 +24,4 @@ jobs:
     - stage: deploy
       if: type IN (push)
       script: echo "deploy!!"
+      # comment by pull-request-branch
