@@ -1,5 +1,8 @@
 sudo: false
 language: generic
+branches:
+  only:
+  - site-auto-publish
 cache:
   directories:
   - "$HOME/.stack/"
@@ -18,3 +21,6 @@ jobs:
       script: stack --no-terminal test
     - stage: site build test
       script: stack exec site rebuild
+    - stage: deploy
+      if: type IN (push)
+      script: echo "deploy!!"
