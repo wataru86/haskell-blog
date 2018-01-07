@@ -26,3 +26,4 @@ jobs:
     - stage: deploy
       if: branch = site-auto-publish AND type IN (push)
       script: echo "deploy!!"
+      # comment by pull-request-branch
