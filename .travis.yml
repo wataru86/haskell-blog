@@ -10,7 +10,6 @@ install:
 - mkdir -p ~/.local/bin
 - export PATH=$HOME/.local/bin:$PATH
 - travis_retry curl -L https://www.stackage.org/stack/linux-x86_64 | tar xz --wildcards --strip-components=1 -C ~/.local/bin '*/stack'
-
 jobs:
   include:
     - stage: install cabal
@@ -26,4 +25,6 @@ jobs:
     - stage: deploy
       if: branch = site-auto-publish AND type IN (push)
       script: echo "deploy!!"
-      # comment by pull-request-branch
+before_install:
+- openssl aes-256-cbc -K $encrypted_c401a9e03794_key -iv $encrypted_c401a9e03794_iv
+  -in deploy_key.enc -out deploy_key -d
