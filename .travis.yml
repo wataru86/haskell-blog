@@ -30,8 +30,11 @@ jobs:
       - chmod 600 deploy_key
       - ssh-add deploy_key
       - git remote add deploy git@github.com:wataru86/haskell-blog.git
+      - git status
       - git add _site/*
-      - git checkout deploy/site
+      - git status
+      - git branch
+      - git checkout site
       - git commit -m "by Travis CI (JOB $TRAVIS_JOB_NUMBER)"
       - git push deploy site
 before_install:
