@@ -32,7 +32,7 @@ jobs:
       - cp  -r _site/ site/
       - git add site/*
       - git status
-      - git checkout site
+      - git checkout :site
       - git commit -m "by Travis CI (JOB $TRAVIS_JOB_NUMBER)"
       - git push origin site
 before_install:
