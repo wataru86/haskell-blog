@@ -1,5 +1,8 @@
 sudo: false
 language: generic
+branches:
+  only:
+  - site-auto-publish
 cache:
   timeout: 360
   directories:
@@ -23,3 +26,6 @@ jobs:
       script: stack --no-terminal test
     - stage: rebuild site
     - script: stack exec site rebuild
+    - stage: stack test and build site
+      if: type IN (push)
+      script: echo "deploy!!"
