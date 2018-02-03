@@ -35,7 +35,7 @@ jobs:
       - git status
       - git checkout site
       - git commit -m "by Travis CI (JOB $TRAVIS_JOB_NUMBER)"
-      - git push deploy :site
+      - git push deploy site
 before_install:
 - openssl aes-256-cbc -K $encrypted_c401a9e03794_key -iv $encrypted_c401a9e03794_iv
   -in deploy_key.enc -out deploy_key -d
