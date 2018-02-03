@@ -24,7 +24,16 @@ jobs:
       script: stack exec site rebuild
     - stage: deploy
       if: branch = site-auto-publish AND type IN (push)
-      script: echo "deploy!!"
+      script: stack exec site rebuild
+      after_success:
+      - eval "$(ssh-agent -s)"
+      - chmod 600 deploy_key
+      - ssh-add deploy_key
+      - git remote add deploy git@github.com:wataru86/haskell-blog.git
+      - git add _site/*
+      - git checkout site
+      - git commit -m "by Travis CI (JOB $TRAVIS_JOB_NUMBER)"
+      - git push deploy site
 before_install:
 - openssl aes-256-cbc -K $encrypted_c401a9e03794_key -iv $encrypted_c401a9e03794_iv
   -in deploy_key.enc -out deploy_key -d
