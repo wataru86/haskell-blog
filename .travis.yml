@@ -22,7 +22,7 @@ jobs:
     - stage: stack test
       script: stack --no-terminal test
     - stage: rebuild site
-    - script: stack exec site rebuild
+      script: stack exec site rebuild
     - stage: deploy
       if: branch = site-auto-publish AND type IN (push)
       script: echo "deploy!!"
