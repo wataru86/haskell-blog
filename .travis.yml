@@ -34,7 +34,7 @@ jobs:
       - cp  -r _site/ site/
       - git add site/*
       - git checkout deploy/site
-      - git commit -m "by Travis CI (JOB $TRAVIS_JOB_NUMBER): $TRAVIS_COMMIT_MESSAGE"
+      - git commit -m "by Travis CI (JOB $TRAVIS_JOB_NUMBER) \: $TRAVIS_COMMIT_MESSAGE"
       - git push deploy HEAD:site
 before_install:
 - openssl aes-256-cbc -K $encrypted_c401a9e03794_key -iv $encrypted_c401a9e03794_iv
