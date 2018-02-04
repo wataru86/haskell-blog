@@ -33,7 +33,7 @@ jobs:
       - git fetch deploy
       - cp  -r _site/ site/
       - git add site/*
-      - git checkout deploy/site
+      # - git checkout deploy/site
       - "git commit -m \"by Travis CI (JOB $TRAVIS_JOB_NUMBER) : $TRAVIS_COMMIT_MESSAGE\""
       - git push deploy HEAD:site
 before_install:
