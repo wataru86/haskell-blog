@@ -30,6 +30,7 @@ jobs:
       - chmod 600 deploy_key
       - ssh-add deploy_key
       - git remote add deploy git@github.com:wataru86/haskell-blog.git
+      - git remote -v
       - cp  -r _site/ site/
       - git add site/*
       - git status
