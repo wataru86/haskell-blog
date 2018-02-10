@@ -10,7 +10,6 @@ install:
 - mkdir -p ~/.local/bin
 - export PATH=$HOME/.local/bin:$PATH
 - travis_retry curl -L https://www.stackage.org/stack/linux-x86_64 | tar xz --wildcards --strip-components=1 -C ~/.local/bin '*/stack'
-
 jobs:
   include:
     - stage: install cabal
@@ -25,5 +24,25 @@ jobs:
       script: stack exec site rebuild
     - stage: deploy
       if: branch = site-auto-publish AND type IN (push)
-      script: echo "deploy!!"
-      # comment by pull-request-branch
+      script: stack exec site rebuild
+      after_success:
+      - eval "$(ssh-agent -s)"
+      - chmod 600 deploy_key
+      - ssh-add deploy_key
+      # - git remote add deploy git@github.com:wataru86/haskell-blog.git
+      # - git fetch deploy
+      # - cp  -r _site/ site/
+      # - git add site/*
+      # - git checkout deploy/site
+      # - git pull --rebase
+      # - "git commit -m \"by Travis CI (JOB $TRAVIS_JOB_NUMBER) : $TRAVIS_COMMIT_MESSAGE\""
+      # - git push deploy HEAD:site
+      - git clone --branch=site git@github.com:wataru86/haskell-blog.git
+      - cd haskell-blog
+      - cp -r ../_site/ .
+      - git add -A
+      - "git commit -m \"by Travis CI (JOB $TRAVIS_JOB_NUMBER) : $TRAVIS_COMMIT_MESSAGE\""
+      - git push origin site
+before_install:
+- openssl aes-256-cbc -K $encrypted_c401a9e03794_key -iv $encrypted_c401a9e03794_iv
+  -in deploy_key.enc -out deploy_key -d
