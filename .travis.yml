@@ -26,6 +26,7 @@ jobs:
       if: branch = site-auto-publish AND type IN (push)
       script: stack exec site rebuild
       after_success:
+      - openssl aes-256-cbc -K $encrypted_c401a9e03794_key -iv $encrypted_c401a9e03794_iv -in deploy_key.enc -out deploy_key -d
       - eval "$(ssh-agent -s)"
       - chmod 600 deploy_key
       - ssh-add deploy_key
@@ -44,5 +45,4 @@ jobs:
       - "git commit -m \"by Travis CI (JOB $TRAVIS_JOB_NUMBER) : $TRAVIS_COMMIT_MESSAGE\""
       - git push origin site
 before_install:
-- openssl aes-256-cbc -K $encrypted_c401a9e03794_key -iv $encrypted_c401a9e03794_iv
-  -in deploy_key.enc -out deploy_key -d
+
