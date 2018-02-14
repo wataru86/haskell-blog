@@ -1,0 +1,13 @@
+version: 2
+jobs:
+  build:
+    working_directory: ~/materialize-hakyll
+    docker:
+      - image: fpco/stack-build
+    steps:
+      - checkout
+      - run:
+          name: build and store artifacts when PR
+          command: |
+            ./circleci/script.hs
+      # artifactsに追加する
