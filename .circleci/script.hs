@@ -4,18 +4,20 @@
 
 module Main where
 
---import Data.Maybe
 import System.Environment
 import Turtle
--- Turtle, reqを追加
+-- reqを追加
 
 main :: IO ()
 main = do
+  setEnv "CIRCLE_PULL_REQUEST" "test_url" -- test
   pullRequestUrl <- lookupEnv "CIRCLE_PULL_REQUEST"
   maybe (putStrLn "This build is not PR.") main' pullRequestUrl
 
 main' :: String -> IO ()
 main' pullRequestUrl = do
   putStrLn ("PR: " ++ pullRequestUrl)
-  -- turtleでstack buildなど
+  view pwd
+  view $ shell "stack build" empty
+  view $ shell "stack exec site rebuild" empty
   -- roqでコメント
