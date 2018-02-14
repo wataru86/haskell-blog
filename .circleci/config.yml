@@ -10,7 +10,9 @@ jobs:
           key: cache
       - run:
           name: build and store artifacts when PR
-          command: ./circleci/script.hs
+          command: |
+            pwd
+            ./circleci/script.hs
       - save_cache:
           key: cache
           paths:
