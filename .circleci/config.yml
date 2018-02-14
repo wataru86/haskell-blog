@@ -12,6 +12,8 @@ jobs:
           name: build and store artifacts when PR
           command: |
             pwd
+            ls
+            ls ..
             ./circleci/script.hs
       - save_cache:
           key: cache
