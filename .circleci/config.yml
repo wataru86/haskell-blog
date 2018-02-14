@@ -14,7 +14,7 @@ jobs:
             pwd
             ls
             ls ..
-            ./circleci/script.hs
+            ./.circleci/script.hs
       - save_cache:
           key: cache
           paths:
