@@ -5,7 +5,7 @@
 module Main where
 
 import System.Environment
-import Turtle
+import Turtle hiding (header)
 import Data.List
 import qualified Data.Text as T
 import qualified Data.ByteString.Char8 as B
@@ -21,7 +21,6 @@ main = do
 main' :: String -> IO ()
 main' pullRequestUrl = do
   putStrLn ("PR: " ++ pullRequestUrl)
-  view pwd
   view $ shell "stack build" empty
   view $ shell "stack exec site rebuild" empty
   runReq def $ do
@@ -40,5 +39,6 @@ main' pullRequestUrl = do
       (https "api.github.com" /: "repos" /: T.pack userName /: T.pack repoName /: "issues" /: T.pack prNumber /: "comments")
       (ReqBodyJson payload)
       jsonResponse
-      (oAuth2Token $ B.pack token)
+      (oAuth2Token (B.pack token) <>
+      header "User-Agent" "bigmoon")
     liftIO $ print (responseBody r :: Value)
