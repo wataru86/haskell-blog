@@ -29,7 +29,7 @@ main' pullRequestUrl = do
     repoName <- liftIO $ getEnv "CIRCLE_PROJECT_REPONAME"
     buildUrl <- liftIO $ getEnv "CIRCLE_BUILD_URL"
     homeDir <- liftIO $ getEnv "HOME"
-    let prNumber = reverse $ takeWhile (== '/') (reverse pullRequestUrl)
+    let prNumber = reverse . takeWhile (/= '/') $ reverse pullRequestUrl
     token    <- liftIO $ getEnv "GITHUB_OAUTH"
     let payload = object
           [ "body" .= intercalate "/"
@@ -42,4 +42,3 @@ main' pullRequestUrl = do
       jsonResponse
       (oAuth2Token $ B.pack token)
     liftIO $ print (responseBody r :: Value)
-
